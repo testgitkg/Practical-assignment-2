@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("form").submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                // Validate name and email fields
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var namePattern = /^[a-zA-Z ]{2,30}$/;
+                var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+                if (!name.match(namePattern)) {
+                    alert("Please enter your name.");
+                    return false; // Prevent form submission
+                }
+
+                if (!email.match(emailPattern)) {
+                    alert("Please enter a valid email address.");
+                    return false; // Prevent form submission
+                }
+
+                // Form data is valid, display an alert
+                alert("Form submitted!\nName: " + name + "\nEmail: " + email);
+            });
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+        }
+
+        form {
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(44, 44, 44, 0.7);
+            max-width: 350px;
+            width: 100%;
+
+        }
+
+
+        h1 {
+            margin-bottom: 25px;
+            font-size: 28px;
+            color: #3c0064;
+            text-align: center;
+            border-bottom: 2px solid #3c0064;
+            padding-bottom: 10px;
+        }
+
+        /* Label Style */
+        label {
+            font-weight: 600;
+            color: #555;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        /* Input Field Style */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1.5px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            border-color: #3c006479;
+            box-shadow: 0 0 8px rgba(63, 0, 99, 0.4);
+            outline: none;
+        }
+
+        /* Button Style */
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background: linear-gradient(135deg, #9b64c0, #490e74);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #490e74, #9b64c0);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Additional Styling */
+        input::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <form>
+        <h1>Form</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter Name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter Email"><br><br>
+
+        <button type="submit" id="submit">Submit</button>
+    </form>
+</body>
+
+</html>

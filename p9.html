@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load More Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Content List</h1>
+
+    <!-- List Container -->
+    <ul id="content-list">
+        <!-- Dynamically loaded content will go here -->
+    </ul>
+
+    <!-- Load More Button -->
+    <button id="load-more-btn">Load More</button>
+
+    <script>
+        // Set the initial page number
+        let currentPage = 1;
+
+        // Function to fetch data from API
+        function fetchContent(page) {
+            $.ajax({
+                url: `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=5`, // Replace with your API endpoint
+                method: 'GET',
+                success: function (data) {
+                    if (data.length > 0) {
+                        // Loop through the data and append it to the list
+                        data.forEach(item => {
+                            $('#content-list').append(`<li>${item.title}</li>`); // Modify to match your content structure
+                        });
+                        // Increment the page number for the next request
+                        currentPage++;
+                    } else {
+                        // Disable the "Load More" button if no more content is available
+                        $('#load-more-btn').prop('disabled', true).text('No more content');
+                    }
+                },
+                error: function () {
+                    alert('Error loading content');
+                }
+            });
+        }
+
+        // Load more content when the button is clicked
+        $('#load-more-btn').on('click', function () {
+            fetchContent(currentPage);
+        });
+
+        // Initial load of content
+        fetchContent(currentPage);
+    </script>
+
+</body>
+
+</html>

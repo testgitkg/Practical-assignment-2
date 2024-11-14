@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"
+      integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+      integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js"
+      integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Chat Application</title>
+    <style>
+      .br-15 {
+        border-radius: 15px;
+        width: auto !important;
+        text-align: justify;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar bg-primary text-white px-4">
+      <div class="nav-item" id="login">
+        <span class="h2">Login</span>
+      </div>
+      <div class="nav-item" id="signup">
+        <span class="h2">Sign Up</span>
+      </div>
+      <div class="nav-item d-none" style="float: right" id="logout">
+        <span class="h2">Logout</span>
+      </div>
+    </div>
+    <div class="container">
+      <form action="post">
+        <div class="loginForm">
+          <div class="table-resposive">
+            <table class="table">
+              <tr>
+                <th class="h1 text-center">Login User</th>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="email"
+                    name="luemail"
+                    id="luemail"
+                    class="form-control"
+                    placeholder="Please enter Email.."
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="password"
+                    name="lupwd"
+                    id="lupwd"
+                    class="form-control"
+                    placeholder="Please enter Password.."
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">
+                  <button type="button" class="btn btn-primary" id="loginBtn">
+                    Log in
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="registerForm d-none">
+          <div class="table-resposive">
+            <table class="table">
+              <tr>
+                <th class="h1 text-center">Sign Up User</th>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="email"
+                    name="ruemail"
+                    id="ruemail"
+                    class="form-control"
+                    placeholder="Please enter Email.."
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <input
+                    type="password"
+                    name="rupwd"
+                    id="rupwd"
+                    class="form-control"
+                    placeholder="Please enter Password.."
+                    required
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td class="text-center">
+                  <button type="button" class="btn btn-primary" id="signupBtn">
+                    Sign Up
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div id="selectChatUser" class="select-user-to-chat my-2 d-none">
+          <div class="input-group">
+            <div class="input-group-prepend" style="margin: auto">
+              <span class="input-group-text">
+                <img
+                  src="../assets/img/user.png"
+                  width="30px"
+                  alt=""
+                  srcset=""
+                />
+              </span>
+            </div>
+            <select name="chatUser" id="chatUser" class="form-control" required>
+              <option value="">--Select User to Chat</option>
+            </select>
+            <div class="input-group-append" style="margin: auto">
+              <span class="input-group-text">
+                <button
+                  type="button"
+                  id="selectUser"
+                  class="btn btn-sm btn-primary"
+                >
+                  Select User
+                </button>
+                <button
+                  type="button"
+                  id="changeUser"
+                  class="btn btn-sm btn-danger d-none"
+                >
+                  Change User
+                </button>
+              </span>
+            </div>
+          </div>
+          <span class="err-txt text-danger d-none"
+            >Please Select Chatting Partner</span
+          >
+        </div>
+        <div class="main-chat d-none">
+          <div class="card my-2">
+            <div
+              class="card-body"
+              id="chat-body"
+              style="
+                min-height: 30em;
+                height: 25em;
+                max-height: 30em;
+                overflow-x: hidden;
+                overflow-y: auto;
+              "
+            >
+              <div class="m">
+                <!-- <div class="row my-3">
+                  <div class="col-12 d-flex justify-content-start">
+                    <div
+                      class="message-receiver bg-primary text-white px-2 py-2 br-15"
+                    >
+                      <span class="message">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Eaque molestiae praesentium ea ut doloribus
+                        corporis explicabo, facilis, quo culpa aspernatur, atque
+                        repellendus at reprehenderit possimus minus recusandae
+                        cupiditate temporibus repudiandae!
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row my-3">
+                  <div class="col-12 d-flex justify-content-end">
+                    <div
+                      class="message-send bg-success text-white px-2 py-2 br-15"
+                    >
+                      <span class="message">
+                        Lorem ipsum dolor, sit amet consectetur adipisicing
+                        elit. Sint provident magnam debitis ea eaque maiores hic
+                        deserunt inventore, vero officiis recusandae harum
+                        accusamus quisquam aliquid animi temporibus quis itaque
+                        corporis.
+                      </span>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="card-footer">
+              <div class="input-group">
+                <input
+                  type="text"
+                  name="msg"
+                  id="msg"
+                  class="form-control"
+                  placeholder="Enter Message..."
+                  required
+                />
+                <button type="button" class="btn" id="sendBtn">
+                  <div
+                    class="input-group-append"
+                    style="margin: auto; padding: 1%"
+                  >
+                    <img
+                      src="../assets/img/send.png"
+                      width="30px"
+                      alt=""
+                      srcset=""
+                    />
+                  </div>
+                </button>
+              </div>
+              <span class="err-txt-msg text-danger d-none"
+                >Please Enter any message</span
+              >
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+    let getLatestMsgSocket;
+    const uid = sessionStorage.getItem("uid");
+    if (uid != undefined) {
+      $("#login").addClass("d-none");
+      $("#signup").addClass("d-none");
+      $("#logout").removeClass("d-none");
+      $(".loginForm").addClass("d-none");
+      $(".registerForm").addClass("d-none");
+      $(".main-chat").removeClass("d-none");
+      $("#selectChatUser").removeClass("d-none");      
+      $("#chat-body").animate(
+        { scrollTop: $(".m")[0].clientHeight, behavior: "smooth " },
+        1000
+      );      
+    }
+    $("#login").click(function () {
+      $(".loginForm").removeClass("d-none");
+      $(".registerForm").addClass("d-none");
+    });
+    $("#signup").click(function () {
+      $(".loginForm").addClass("d-none");
+      $(".registerForm").removeClass("d-none");
+    });
+    $("#logout").click(function () {
+      $("#login").removeClass("d-none");
+      $("#signup").removeClass("d-none");
+      $("#logout").addClass("d-none");
+      $(".loginForm").removeClass("d-none");
+      $(".registerForm").addClass("d-none");
+      $(".main-chat").addClass("d-none");
+      $("#selectChatUser").addClass("d-none");
+      $("#chatUser").attr("disabled", false);
+      $("#changeUser").addClass("d-none");
+      $("#selectUser").removeClass("d-none");
+      $(".m").html("");
+      clearInterval(getLatestMsgSocket);
+      sessionStorage.removeItem("uid");
+    });
+    $("#signupBtn").click(function () {
+      if ($("#rupwd").valid() || $("#ruemail").valid()) {
+        $.ajax({
+          method: "POST",
+          url: "http://localhost:80/ICTSEM-1/JAVASCRIPT/jQuery/apis/crud.php?what=saveUser",
+          data: {
+            password: $("#rupwd").val(),
+            uemail: $("#ruemail").val(),
+          },
+          dataType: "JSON",
+          success: function (res) {
+            console.log(res);
+            if (res.success) {
+              alert(res.message);
+              $(".loginForm").removeClass("d-none");
+              $(".registerForm").addClass("d-none");
+            } else {
+              alert(res.message);
+            }
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+      }
+    });
+    $("#loginBtn").click(function () {
+      if ($("#rupwd").valid() || $("#ruemail").valid()) {
+        $.ajax({
+          method: "POST",
+          url: "http://localhost:80/ICTSEM-1/JAVASCRIPT/jQuery/apis/crud.php?what=fetchUserDetails",
+          data: {
+            password: $("#lupwd").val(),
+            uemail: $("#luemail").val(),
+          },
+          dataType: "JSON",
+          success: function (res) {
+            if (res.success) {
+              alert(res.message);
+              sessionStorage.setItem("uid", res.data.uid);
+              $("#login").addClass("d-none");
+              $("#signup").addClass("d-none");
+              $("#logout").removeClass("d-none");
+              $(".loginForm").addClass("d-none");
+              $(".registerForm").addClass("d-none");
+              $(".main-chat").removeClass("d-none");
+              $("#selectChatUser").removeClass("d-none");
+              $("#chat-body").animate(
+                { scrollTop: $(".m")[0].clientHeight, behavior: "smooth " },
+                1000
+              );
+              fetchChatUser();
+            } else {
+              alert(res.message);
+            }
+          },
+          error: function (err) {
+            console.log(err);
+          },
+        });
+      }
+    });
+    fetchChatUser();
+    function fetchChatUser() {
+      $.ajax({
+        method: "POST",
+        url: "http://localhost:80/ICTSEM-1/JAVASCRIPT/jQuery/apis/crud.php?what=fetchChatterUser",
+        dataType: "JSON",
+        data: {
+          uid: uid,
+        },
+        success: function (res) {
+          if (res.success) {
+            let op = `<option value="">--Select User to Chat</option>`;
+            $.each(res.data, function (i, d) {
+              op += `<option value="${d.id}">${d.uemail}</option>`;
+            });
+            $("#chatUser").html(op);
+          } else {
+            console.log(res.message);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    }
+
+    $("#selectUser").click(function () {
+      if ($("#chatUser").val() != "") {
+        $("#chatUser").attr("disabled", true);
+        $(this).addClass("d-none");
+        $("#changeUser").removeClass("d-none");
+        $(".err-txt").addClass("d-none");
+        fetchAllChatMessages();
+        getLatestMsgSocket = setInterval(getLatestMsg,1000);
+      } else {
+        $(".err-txt").removeClass("d-none");
+      }
+    });
+    $("#changeUser").click(function () {
+      $("#chatUser").attr("disabled", false);
+      $(this).addClass("d-none");
+      $("#selectUser").removeClass("d-none");
+    });
+    $("#sendBtn").click(function () {
+      if ($("#chatUser").val() != "") {
+        if ($("#msg").val() != "") {
+          let msg = $("#msg").val();
+          $.ajax({
+            method: "POST",
+            url: "http://localhost:80/ICTSEM-1/JAVASCRIPT/jQuery/apis/crud.php?what=saveChat",
+            dataType: "JSON",
+            data: {
+              suid: uid,
+              ruid: $("#chatUser").val(),
+              desc: msg,
+            },
+            success: function (res) {
+              console.log(res);
+              if (res.success) {
+                let msgDesign = `
+                    <div class="row my-3">
+                        <div class="col-12 d-flex justify-content-end">
+                            <div class="message-send bg-success text-white px-2 py-2 br-15">
+                                <span class="message">
+                                ${msg}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                $(".m").append(msgDesign);
+                $("#chat-body").animate(
+                  { scrollTop: $(".m")[0].clientHeight, behavior: "smooth " },
+                  1000
+                );                
+              } else {
+                console.log(res.message);
+              }
+              $(".err-txt-msg").addClass("d-none");
+            },
+            error: function (err) {
+              console.log(err);
+            },
+          });
+        } else {
+          $(".err-txt-msg").removeClass("d-none");
+        }
+        $(".err-txt").addClass("d-none");
+      } else {
+        $(".err-txt").removeClass("d-none");
+      }
+    });
+
+    function fetchAllChatMessages() {
+      $.ajax({
+        method: "POST",
+        url: "http://localhost:80/ICTSEM-1/JAVASCRIPT/jQuery/apis/crud.php?what=getAllChat",
+        dataType: "JSON",
+        data: {
+          suid: uid,
+          ruid: $("#chatUser").val(),          
+        },
+        success: function (res) {
+          if (res.success) {
+            let msgDesign = ""
+            $.each(res.data,function (key,chat){
+                if(chat.sender_uid== uid) {
+                    msgDesign += `
+                    <div class="row my-3">
+                        <div class="col-12 d-flex justify-content-end">
+                            <div class="message-send bg-success text-white px-2 py-2 br-15">
+                                <span class="message">
+                                ${chat.chat_decs}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    
+                }else{
+                    msgDesign += `
+                    <div class="row my-3">
+                        <div class="col-12 d-flex justify-content-start">
+                            <div class="message-receiver bg-primary text-white px-2 py-2 br-15">
+                            <span class="message">
+                                ${chat.chat_decs}
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+            })
+            $(".m").html(msgDesign);
+            $("#chat-body").animate(
+                  { scrollTop: $(".m")[0].clientHeight, behavior: "smooth " },
+                  1000
+                );
+          } else {
+            console.log(res.message);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    }
+    
+
+    function getLatestMsg(){
+        $.ajax({
+        method: "POST",
+        url: "http://localhost:80/ICTSEM-1/JAVASCRIPT/jQuery/apis/crud.php?what=getLatestMsg",
+        dataType: "JSON",
+        data: {
+          suid: uid,
+          ruid: $("#chatUser").val(),          
+        },
+        success: function (res) {
+          if (res.success) {
+            let msgDesign = ""
+            $.each(res.data,function (key,chat){
+                if(chat.sender_uid != uid) {                   
+                    msgDesign += `
+                    <div class="row my-3">
+                        <div class="col-12 d-flex justify-content-start">
+                            <div class="message-receiver bg-primary text-white px-2 py-2 br-15">
+                            <span class="message">
+                                ${chat.chat_decs}
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                }
+                $(".m").append(msgDesign);
+                $("#chat-body").animate(
+                      { scrollTop: $(".m")[0].clientHeight, behavior: "smooth " },
+                      1000
+                );
+            })
+          } else {
+            console.log(res.message);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        },
+      });
+    }
+  </script>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form Validation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f1f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #myForm {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+
+        }
+
+        h1 {
+            color: #3c0064;
+            font-size: 26px;
+            /* margin-top: 0%; */
+            margin-bottom: 40px;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: 90%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 18px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #f8f8f8;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #3c006479;
+            box-shadow: 0 0 8px rgba(63, 0, 99, 0.4);
+        }
+
+        input[type="text"].error {
+            border-color: #ff4d4d;
+            background-color: #fbe6e6;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: -12px;
+            margin-bottom: 18px;
+            text-align: left;
+            display: block;
+        }
+
+        button {
+            background-color: #984eca;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(44, 44, 44, 0.7);
+        }
+
+        button:hover {
+            background-color: #3c0064;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        @media (max-width: 500px) {
+            #myForm {
+                width: 90%;
+                padding: 30px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <form id="myForm">
+        <h1><i class="fas fa-user"></i> Simple Form Validation</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <span class="error-message" id="nameError"></span>
+        <br>
+
+        <button type="submit" id="submit"><i class="fas fa-paper-plane"></i> Submit</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myForm").submit(function (event) {
+                // Prevent the form from submitting
+                event.preventDefault();
+
+                // Get the value of the name input field
+                const nameValue = $("#name").val();
+
+                // Define the pattern (only letters, min length 3, max length 20)
+                const namePattern = /^[A-Za-z]{3,20}$/;
+
+                // Check if the name field is empty
+                if (nameValue.trim() === "") {
+                    $("#nameError").text("Name cannot be empty");
+                } else if (!namePattern.test(nameValue.trim())) {
+                    // Check if the name field matches the pattern
+                    $("#nameError").text("Name must contain only letters");
+                } else {
+                    // Clear any previous error message
+                    $("#nameError").text("");
+
+                    // Submit the form (or perform other actions)
+                    alert("Form submitted successfully!");
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

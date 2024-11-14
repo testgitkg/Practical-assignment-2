@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Chat Application</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            
+        }
+        #chatWindow {
+            width: 30%;
+            height: 300px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            overflow-y: scroll;
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 10px;
+        }
+        #chatWindow .message {
+            margin: 10px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        #chatWindow .message.user {
+            background-color: #e1ffc7;
+        }
+        #chatWindow .message.other {
+            background-color: #d0e1ff;
+        }
+        #messageInput {
+            width: 30%;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        #sendMessageButton {
+            padding: 10px 20px;
+            background-color: #3c0064;
+            margin-left: 12%;
+            color: white;
+            border: none;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Real-time Chat</h2>
+
+    <!-- Chat window where messages will appear -->
+    <div id="chatWindow"></div>
+
+    <!-- Input to send new messages -->
+    <input type="text" id="messageInput" placeholder="Type your message here..." autofocus><br><br>
+    <button id="sendMessageButton">Send</button>
+
+    <script>
+        $(document).ready(function() {
+            // Simulated chat data (normally this would come from the server)
+            var messages = [
+                {user: 'other', text: 'Hello! How are you?'},
+                {user: 'other', text: 'Have you seen the latest update?'}
+            ];
+
+            // Function to load messages into the chat window
+            function loadMessages() {
+                $('#chatWindow').empty(); // Clear chat window
+                messages.forEach(function(message) {
+                    var messageClass = message.user === 'user' ? 'message user' : 'message other';
+                    $('#chatWindow').append(`<div class="${messageClass}">${message.text}</div>`);
+                });
+                $('#chatWindow').scrollTop($('#chatWindow')[0].scrollHeight); // Auto scroll to bottom
+            }
+
+            // Load initial messages
+            loadMessages();
+
+            // Send message when user clicks "Send" button
+            $('#sendMessageButton').on('click', function() {
+                var messageText = $('#messageInput').val();
+
+                // Basic validation: ensure the message is not empty
+                if (messageText.trim() !== '') {
+                    // Add the message to the messages array (simulates sending to server)
+                    messages.push({user: 'user', text: messageText});
+
+                    // Clear input field
+                    $('#messageInput').val('');
+
+                    // Reload messages
+                    loadMessages();
+
+                    // Simulate receiving a response from another user after 1 second
+                    setTimeout(function() {
+                        var botResponse = 'I received your message: "' + messageText + '"';
+                        messages.push({user: 'other', text: botResponse});
+                        loadMessages(); // Reload messages with new bot response
+                    }, 1000);
+                }
+            });
+
+            // Allow sending message with Enter key
+            $('#messageInput').on('keypress', function(e) {
+                if (e.which === 13) { // Enter key pressed
+                    $('#sendMessageButton').click(); // Trigger send button click
+                }
+            });
+
+            // Real-time polling for new messages (simulated in this case)
+            function fetchNewMessages() {
+                // Normally, you'd make an AJAX request to the server here to fetch new messages.
+                // Example:
+                // $.ajax({
+                //     url: '/path/to/server',
+                //     method: 'GET',
+                //     success: function(response) {
+                //         // Append new messages to chat window
+                //     }
+                // });
+            }
+
+            // Polling new messages every 5 seconds (for real-time effect)
+            setInterval(fetchNewMessages, 5000);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <style>
+    body{
+            font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f5f1f7;
+        }
+
+        .container {
+                text-align: center;
+                /* background-color: #f1daff; */
+                padding: 20px;
+                width: 40%;
+                border-radius: 20px;
+                box-shadow: 0 4px 10px rgba(44, 44, 44, 0.7);
+            }
+    </style>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+      integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    
+    <title>Wheather Information</title>
+</head>
+<body>
+    <div class="container">
+        <form method="post">
+            <div class="input-group my-5">
+                <input type="text" name="cityName" id="cityName" class="form-control" placeholder="Enter City Name..." required>
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-primary" id="search" name="search">Get Weather Details</button>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="card w-50 text-center d-none">
+                    <div class="card-body d-inline-flex justify-content-center" style="align-items: center;gap: 5%;" id="weather">                        
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    $("#search").click(function(e){
+        e.preventDefault();
+        if($("#cityName").val() != ""){
+            $.ajax({
+                type : "GET",
+                method : "GET",
+                url : `https://weatherapi-com.p.rapidapi.com/current.json?q=${$("#cityName").val().trim()}`,
+                headers : {
+                    'X-RapidAPI-Key': 'f6e9b0aa7emshe26b2d490c954c1p1102fdjsn733b53e7767b',
+                    'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com'
+                },
+                success : function(response){                
+                    console.log(response);
+
+                    // $("#result").removeClass("d-none");
+                    // $("#cityHeader").html(response.location.name + " / " + response.location.localtime);
+                    $("#weather").html(`
+                        <span class="round">
+                            <img src='https:${response.current.condition.icon}' alt="" class="img rounded-circle">
+                            <br>
+                            <span class="h2">${response.current.condition.text}</span>
+                            <br>
+                            <span class="h2">${response.location.name}</span>
+                            </span>
+                    `);
+                    $(".card").removeClass("d-none");
+                },
+                error : function(err){
+                    console.log(err);
+                    alert(err.responseJSON.error.message);        
+                }
+            })
+        }else{
+            alert("Please enter City");
+            $(".card").addClass("d-none");
+        }
+    })
+</script>
+</html>
